@@ -78,6 +78,15 @@
 ;; Download Evil
 (straight-use-package 'evil)
 (evil-mode 1)
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 
 ;; Terminal Emulator
 (straight-use-package 'multi-term)
@@ -170,13 +179,13 @@
 (general-create-definer pangpang/leader-def
   :prefix "SPC")
 (pangpang/leader-def
- :keymaps 'normal
- "p" 'package-refresh-contents
- "b" 'helm-buffers-list
- "f" 'helm-find-files
- "x" 'helm-M-x
- "k" 'kill-buffer
- )
+  :keymaps 'normal
+  "p" 'package-refresh-contents
+  "b" 'helm-buffers-list
+  "f" 'helm-find-files
+  "x" 'helm-M-x
+  "k" 'kill-buffer
+  )
 ;;; Programming Languages
 ;; python
 (straight-use-package 'pyvenv)
