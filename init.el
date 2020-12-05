@@ -5,6 +5,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
+;; http proxy
 (setq url-proxy-services
    '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
      ("http" . "127.0.0.1:2081")
@@ -51,40 +52,48 @@
 
 (when (not package-archive-contents)
   (package-refresh-contents))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(defun pangpang/use-package (pkg)
-  (unless (package-installed-p pkg)
-    (package-install pkg))
-  (require pkg))
 
 ;; neotree
-(pangpang/use-package 'neotree)
+(straight-use-package 'neotree)
 (global-set-key (kbd "M-1") 'neotree-toggle)
 
 ;; rg.el
-(pangpang/use-package 'rg)
+(straight-use-package 'rg)
 (rg-enable-default-bindings)
 
 ;;; Evil Mode
 ;; Download Evil
-(pangpang/use-package 'evil)
+(straight-use-package 'evil)
 (evil-mode 1)
 
 ;; Terminal Emulator
-(pangpang/use-package 'multi-term)
+(straight-use-package 'multi-term)
 (setq multi-term-program "/bin/bash")
 
 ;;;; Programming Languages
 ;;; SLIME
-(pangpang/use-package 'slime)
+(straight-use-package 'slime)
 (setq inferior-lisp-program "sbcl")
 ;;; emmet
-(pangpang/use-package 'emmet-mode)
+(straight-use-package 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook 'emmet-mode)
 
 ;; company
-(pangpang/use-package 'company)
+(straight-use-package 'company)
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay 0)                         ; decrease delay before autocompletion popup shows
 (setq company-echo-delay 0)                          ; remove annoying blinking
@@ -94,17 +103,17 @@
 
 
 ;; yasnippet
-(pangpang/use-package 'yasnippet)
+(straight-use-package 'yasnippet)
 (yas-global-mode 1)
-(pangpang/use-package 'yasnippet-snippets)
+(straight-use-package 'yasnippet-snippets)
 
 ;; golang
-(pangpang/use-package 'go-mode)
+(straight-use-package 'go-mode)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 (add-hook 'go-mode-hook #'linum-mode)
 
 ;; eglot-mode
-(pangpang/use-package 'eglot)
+(straight-use-package 'eglot)
 (add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
 (add-hook 'c-mode-hook 'eglot-ensure)
@@ -116,18 +125,18 @@
 (add-hook 'go-mode-hook #'eglot-go-install-save-hooks)
 
 ;; rainbow parens
-(pangpang/use-package 'rainbow-delimiters)
+(straight-use-package 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;; electric pair
 (electric-pair-mode 1)
 ;;; Simple clip
-(pangpang/use-package 'simpleclip)
+(straight-use-package 'simpleclip)
 (simpleclip-mode 1)
 ;;; all the icons
-(pangpang/use-package 'all-the-icons)
+(straight-use-package 'all-the-icons)
 
 ;;; helm
-(pangpang/use-package 'helm)
+(straight-use-package 'helm)
 (global-set-key (kbd "M-x") #'helm-M-x)
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
@@ -145,12 +154,12 @@
 (add-hook 'helm-after-initialize-hook 'helm-buffer-face-mode)
 
 ;;; which-key
-(pangpang/use-package 'which-key)
+(straight-use-package 'which-key)
 (setq which-key-idle-delay .5)
 (which-key-mode)
 
 ;;; general
-(pangpang/use-package 'general)
+(straight-use-package 'general)
 (general-define-key
  :states 'normal
  ;; switch buffers
@@ -170,19 +179,27 @@
  )
 ;;; Programming Languages
 ;; python
-(pangpang/use-package 'pyvenv)
+(straight-use-package 'pyvenv)
+;; solidity
+(straight-use-package 'solidity-mode)
+(straight-use-package 'company-solidity)
+(add-hook 'solidity-mode-hook
+	  (lambda ()
+	    (set (make-local-variable 'company-backends)
+		 (append '((company-solidity company-capf company-dabbrev-code))
+			 company-backends))))
 ;;; Theming
 ;; font size
 (set-face-attribute 'mode-line nil :height 200)
 (setq default-frame-alist '((font . "Source Code Pro-20")))
-(pangpang/use-package 'doom-themes)
+(straight-use-package 'doom-themes)
 (setq doom-themes-enable-bold t
       doom-themes-enable-italic t)
 (load-theme 'doom-city-lights t)
 ;; Enable flashing mode-line on errors
 (doom-themes-visual-bell-config)
 ;;; mode line
-(pangpang/use-package 'doom-modeline)
+(straight-use-package 'doom-modeline)
 (doom-modeline-mode 1)
 ;; Enable custom neotree theme (all-the-icons must be installed!)
 (doom-themes-neotree-config)

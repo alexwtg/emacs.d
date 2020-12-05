@@ -6,7 +6,7 @@
  '(flymake-no-changes-timeout 0.5)
  '(lsp-flycheck-live-reporting nil)
  '(package-selected-packages
-   '(vterm yasnippet-snippets doom-themes use-package simpleclip evil)))
+   '(company-solidity solidity-mode vterm yasnippet-snippets doom-themes use-package simpleclip evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
