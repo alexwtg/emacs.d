@@ -1,0 +1,7 @@
+auto-save-list/
+elpa/
+eshell/
+local/
+transient/
+.lsp-session-v1
+*.elc
