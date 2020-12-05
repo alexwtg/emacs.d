@@ -197,6 +197,9 @@
 	    (set (make-local-variable 'company-backends)
 		 (append '((company-solidity company-capf company-dabbrev-code))
 			 company-backends))))
+;;; Blogging
+(straight-use-package 'easy-hugo)
+(setq easy-hugo-basedir "~/blog/")
 ;;; Theming
 ;; font size
 (set-face-attribute 'mode-line nil :height 200)
