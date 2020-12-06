@@ -10,6 +10,7 @@
    '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
      ("http" . "127.0.0.1:2081")
      ("https" . "127.0.0.1:2081")))
+;; (setq url-proxy-services 'nil) ;
 ;; bars
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
@@ -200,6 +201,17 @@
 ;;; Blogging
 (straight-use-package 'easy-hugo)
 (setq easy-hugo-basedir "~/blog/")
+
+;; Markdown
+(straight-use-package 'markdown-mode)
+;;; Misc
+;; impatient-mode
+(straight-use-package 'impatient-mode)
+(defun imp-markdown-filter (buffer)
+  (princ (with-current-buffer buffer
+	   (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://strapdownjs.com/v/0.2/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+	 (current-buffer)))
+
 ;;; Theming
 ;; font size
 (set-face-attribute 'mode-line nil :height 200)
