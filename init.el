@@ -186,7 +186,7 @@
   "f" 'helm-find-files
   "x" 'helm-M-x
   "k" 'kill-buffer
-  "z" 'toggle-input-method
+  "z" 'set-input-method
   )
 ;;; Programming Languages
 
