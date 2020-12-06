@@ -186,8 +186,10 @@
   "f" 'helm-find-files
   "x" 'helm-M-x
   "k" 'kill-buffer
+  "z" 'toggle-input-method
   )
 ;;; Programming Languages
+
 ;; python
 (straight-use-package 'pyvenv)
 ;; solidity
@@ -204,7 +206,20 @@
 
 ;; Markdown
 (straight-use-package 'markdown-mode)
+
+;; CJK
+(straight-use-package 'pyim)
+(straight-use-package 'pyim-basedict)
+
+(pyim-basedict-enable)
+(setq pyim-default-scheme 'quanpin)
+(setq pyim-page-tooltip 'popup)
+(setq pyim-page-length 5)
+(add-hook 'emacs-startup-hook
+	  #'(lambda () (pyim-restart-1 t)))
 ;;; Misc
+;; popup.el
+(straight-use-package 'popup)
 ;; impatient-mode
 (straight-use-package 'impatient-mode)
 (defun imp-markdown-filter (buffer)
@@ -232,6 +247,5 @@
 (doom-themes-treemacs-config)
 ;; Corrects (and improves) org-mode's native fontification.
 (doom-themes-org-config)
-
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
