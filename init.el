@@ -215,6 +215,7 @@
 (setq pyim-default-scheme 'quanpin)
 (setq pyim-page-tooltip 'popup)
 (setq pyim-page-length 5)
+(setq pyim-punctuation-translate-p '(no yes auto))
 (add-hook 'emacs-startup-hook
 	  #'(lambda () (pyim-restart-1 t)))
 ;;; Misc
