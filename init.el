@@ -93,7 +93,13 @@
 (straight-use-package 'multi-term)
 (setq multi-term-program "/bin/bash")
 
-;;;; Programming Languages
+;;;; Programming
+;; yaml
+(straight-use-package 'yaml-mode)
+(add-hook 'yaml-mode-hook
+          (lambda ()
+            (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
 ;;; SLIME
 (straight-use-package 'slime)
 (setq inferior-lisp-program "sbcl")
