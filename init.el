@@ -135,7 +135,9 @@
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (add-hook 'objc-mode-hook 'eglot-ensure)
-
+(add-to-list 'eglot-server-programs 
+             '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
+(add-hook 'haskell-mode 'eglot-ensure)
 (defun eglot-go-install-save-hooks ()
   (add-hook 'before-save-hook #'eglot-format-buffer t t))
 (add-hook 'go-mode-hook #'eglot-go-install-save-hooks)
@@ -208,6 +210,7 @@
 			 company-backends))))
 ;; haskell
 (straight-use-package 'haskell-mode)
+
 ;;; Blogging
 (straight-use-package 'easy-hugo)
 (setq easy-hugo-basedir "~/blog/")
