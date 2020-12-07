@@ -206,6 +206,8 @@
 	    (set (make-local-variable 'company-backends)
 		 (append '((company-solidity company-capf company-dabbrev-code))
 			 company-backends))))
+;; haskell
+(straight-use-package 'haskell-mode)
 ;;; Blogging
 (straight-use-package 'easy-hugo)
 (setq easy-hugo-basedir "~/blog/")
