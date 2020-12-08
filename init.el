@@ -11,6 +11,7 @@
      ("http" . "127.0.0.1:2081")
      ("https" . "127.0.0.1:2081")))
 ;; (setq url-proxy-services 'nil) ;
+(global-linum-mode)
 ;; bars
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
