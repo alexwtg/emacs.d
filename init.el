@@ -135,8 +135,10 @@
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (add-hook 'objc-mode-hook 'eglot-ensure)
-(add-to-list 'eglot-server-programs 
-             '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs 
+               '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
+  )
 (add-hook 'haskell-mode 'eglot-ensure)
 (defun eglot-go-install-save-hooks ()
   (add-hook 'before-save-hook #'eglot-format-buffer t t))
