@@ -7,3 +7,4 @@ transient/
 pyim/
 .lsp-session-v1
 *.elc
+!init.elc
