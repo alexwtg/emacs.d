@@ -35,6 +35,11 @@
       kept-new-versions 5    ; keep some new versions
       kept-old-versions 2)   ; and some old ones, too
 
+(setq history-length 100)
+(put 'minibuffer-history 'history-length 50)
+(put 'evil-ex-history 'history-length 50)
+(put 'kill-ring 'history-length 25)
+
 ;; neat scrolling
 (setq scroll-margin 999
       scroll-conservatively 0
@@ -137,7 +142,7 @@
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (add-hook 'objc-mode-hook 'eglot-ensure)
 (with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs 
+  (add-to-list 'eglot-server-programs
                '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
   )
 (add-hook 'haskell-mode 'eglot-ensure)
@@ -223,15 +228,20 @@
 
 ;; CJK
 (straight-use-package 'pyim)
-(straight-use-package 'pyim-basedict)
 
-(pyim-basedict-enable)
 (setq pyim-default-scheme 'quanpin)
 (setq pyim-page-tooltip 'popup)
 (setq pyim-page-length 5)
 (setq pyim-punctuation-translate-p '(no yes auto))
-(add-hook 'emacs-startup-hook
-	  #'(lambda () (pyim-restart-1 t)))
+
+(with-eval-after-load 'pyim
+  (straight-use-package 'pyim-basedict)
+  (add-hook 'emacs-startup-hook
+	    #'(lambda () (pyim-restart-1 t)))
+  )
+(with-eval-after-load 'pyim-basedict
+  (pyim-basedict-enable)
+  )
 ;;; Misc
 ;; popup.el
 (straight-use-package 'popup)
@@ -264,3 +274,6 @@
 (doom-themes-org-config)
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
+
+
+(message "%s" (propertize "Emacs initialized!!" 'face '(:foreground "red")))
